@@ -454,6 +454,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 			[webSocketsLock lock];
 			for (WebSocket *webSocket in webSockets)
 			{
+                webSocket.delegate = nil;
 				[webSocket stop];
 			}
 			[webSockets removeAllObjects];
