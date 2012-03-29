@@ -71,18 +71,6 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		connectionsLock = [[NSLock alloc] init];
 		webSocketsLock  = [[NSLock alloc] init];
 		
-		// Register for notifications of closed connections
-		[[NSNotificationCenter defaultCenter] addObserver:self
-		                                         selector:@selector(connectionDidDie:)
-		                                             name:HTTPConnectionDidDieNotification
-		                                           object:nil];
-		
-		// Register for notifications of closed websocket connections
-		[[NSNotificationCenter defaultCenter] addObserver:self
-		                                         selector:@selector(webSocketDidDie:)
-		                                             name:WebSocketDidDieNotification
-		                                           object:nil];
-		
 		isRunning = NO;
 	}
 	return self;
@@ -408,6 +396,16 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 			
 			isRunning = YES;
 			[self publishBonjour];
+			
+			[[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(connectionDidDie:)
+                                                         name:HTTPConnectionDidDieNotification
+                                                       object:nil];
+            
+			[[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(webSocketDidDie:)
+                                                         name:WebSocketDidDieNotification
+                                                       object:nil];
 		}
 		else
 		{
@@ -441,23 +439,26 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		
 		if (!keepExistingConnections)
 		{
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            
 			// Stop all HTTP connections the server owns
 			//[connectionsLock lock];
 			for (HTTPConnection *connection in connections)
 			{
 				[connection stop];
 			}
-			//[connections removeAllObjects];
+			[connections removeAllObjects];
 			//[connectionsLock unlock];
 			
 			// Stop all WebSocket connections the server owns
 			//[webSocketsLock lock];
+			
 			for (WebSocket *webSocket in webSockets)
 			{
                 webSocket.delegate = nil;
 				[webSocket stop];
 			}
-			//[webSockets removeAllObjects];
+			[webSockets removeAllObjects];
 			//[webSocketsLock unlock];
 		}
 	}});
