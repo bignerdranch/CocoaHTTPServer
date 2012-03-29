@@ -33,6 +33,7 @@
 	dispatch_source_t readSource;
 	BOOL readSourceSuspended;
 }
+@property (nonatomic, strong) NSDictionary *httpHeaders;
 
 - (id)initWithFilePath:(NSString *)filePath forConnection:(HTTPConnection *)connection;
 - (NSString *)filePath;
