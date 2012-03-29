@@ -442,23 +442,23 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		if (!keepExistingConnections)
 		{
 			// Stop all HTTP connections the server owns
-			[connectionsLock lock];
+			//[connectionsLock lock];
 			for (HTTPConnection *connection in connections)
 			{
 				[connection stop];
 			}
-			[connections removeAllObjects];
-			[connectionsLock unlock];
+			//[connections removeAllObjects];
+			//[connectionsLock unlock];
 			
 			// Stop all WebSocket connections the server owns
-			[webSocketsLock lock];
+			//[webSocketsLock lock];
 			for (WebSocket *webSocket in webSockets)
 			{
                 webSocket.delegate = nil;
 				[webSocket stop];
 			}
-			[webSockets removeAllObjects];
-			[webSocketsLock unlock];
+			//[webSockets removeAllObjects];
+			//[webSocketsLock unlock];
 		}
 	}});
 }
