@@ -214,7 +214,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 	// This method is not exactly designed to be overriden.
 	// Subclasses are encouraged to override the didClose method instead.
 	
-	dispatch_async(websocketQueue, ^{ @autoreleasepool {
+	dispatch_sync(websocketQueue, ^{ @autoreleasepool {
 		
 		[asyncSocket disconnect];
 	}});

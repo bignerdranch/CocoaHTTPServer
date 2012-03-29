@@ -584,7 +584,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)stop
 {
-	dispatch_async(connectionQueue, ^{ @autoreleasepool {
+	dispatch_sync(connectionQueue, ^{ @autoreleasepool {
 		
 		// Disconnect the socket.
 		// The socketDidDisconnect delegate method will handle everything else.
