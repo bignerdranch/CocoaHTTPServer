@@ -43,7 +43,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:serverQueue];
 		
 		// Use default connection class of HTTPConnection
-		connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
+		connectionQueue = dispatch_queue_create("HTTPConnection", DISPATCH_QUEUE_CONCURRENT);
 		connectionClass = [HTTPConnection self];
 		
 		// By default bind on all available interfaces, en1, wifi etc
