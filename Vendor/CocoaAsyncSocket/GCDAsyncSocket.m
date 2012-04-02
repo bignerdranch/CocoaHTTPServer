@@ -311,7 +311,7 @@ enum GCDAsyncSocketConfig
 		
 		if (d)
 		{
-			buffer = d;
+			buffer = [d mutableCopy];
 			startOffset = s;
 			bufferOwner = NO;
 			originalBufferLength = [d length];
