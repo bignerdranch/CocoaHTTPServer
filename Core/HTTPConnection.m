@@ -2374,7 +2374,10 @@ static NSMutableArray *recentNonces;
 	{
 		// Update the amount of data we have in asyncSocket's write queue.
 		// This will allow asynchronous responses to continue sending more data.
-		[responseDataSizes removeObjectAtIndex:0];
+        if ([responseDataSizes count] > 0)
+		{
+			[responseDataSizes removeObjectAtIndex:0];
+		}
 		
 		// Don't continue sending the response yet.
 		// The chunked footer that was sent after the body will tell us if we have more data to send.
