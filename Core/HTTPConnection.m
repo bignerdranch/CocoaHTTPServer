@@ -2374,7 +2374,7 @@ static NSMutableArray *recentNonces;
 	{
 		// Update the amount of data we have in asyncSocket's write queue.
 		// This will allow asynchronous responses to continue sending more data.
-        if ([responseDataSizes count] > 0)
+        if (responseDataSizes && [responseDataSizes count] > 0)
 		{
 			[responseDataSizes removeObjectAtIndex:0];
 		}
@@ -2406,7 +2406,7 @@ static NSMutableArray *recentNonces;
 	else if (tag == HTTP_RESPONSE || tag == HTTP_FINAL_RESPONSE)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-		if ([responseDataSizes count] > 0)
+		if (responseDataSizes && [responseDataSizes count] > 0)
 		{
 			[responseDataSizes removeObjectAtIndex:0];
 		}
