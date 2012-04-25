@@ -2367,7 +2367,9 @@ static NSMutableArray *recentNonces;
 	if (tag == HTTP_PARTIAL_RESPONSE_BODY)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-		[responseDataSizes removeObjectAtIndex:0];
+        @synchronized(responseDataSizes) {
+            [responseDataSizes removeObjectAtIndex:0];
+        }
 		
 		// We only wrote a part of the response - there may be more
 		[self continueSendingStandardResponseBody];
@@ -2393,7 +2395,9 @@ static NSMutableArray *recentNonces;
 	else if (tag == HTTP_PARTIAL_RANGE_RESPONSE_BODY)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-		[responseDataSizes removeObjectAtIndex:0];
+		@synchronized(responseDataSizes) {
+            [responseDataSizes removeObjectAtIndex:0];
+        }
 		
 		// We only wrote a part of the range - there may be more
 		[self continueSendingSingleRangeResponseBody];
@@ -2401,7 +2405,9 @@ static NSMutableArray *recentNonces;
 	else if (tag == HTTP_PARTIAL_RANGES_RESPONSE_BODY)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-		[responseDataSizes removeObjectAtIndex:0];
+		@synchronized(responseDataSizes) {
+            [responseDataSizes removeObjectAtIndex:0];
+        }
 		
 		// We only wrote part of the range - there may be more, or there may be more ranges
 		[self continueSendingMultiRangeResponseBody];
